@@ -40,7 +40,6 @@ void debugmsg(LPCWSTR word) {
 }
 
 //最適化無効化しないとリリースビルド時InitInstanceでエラーになる
-#pragma optimize("", off)
 int WINAPI wWinMain(
     _In_ HINSTANCE     hCurrInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -116,12 +115,12 @@ int WINAPI wWinMain(
 
     return (int)msg.wParam;
 }
-#pragma optimize("", on)
 
 //ウインドウクラスの登録
 ATOM InitApp(HINSTANCE hInstance) {
     WNDCLASSEX wcex;
 
+    ZeroMemory(&wcex, sizeof(WNDCLASSEX));
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;
@@ -163,7 +162,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
 
     //ウィンドウ作成が成功していればウィンドウハンドルが返される
     if (!hWnd) {
-        return false;
+        return FALSE;
     }
 
     // ShowWindow で表示
@@ -174,6 +173,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
 
     //ウィンドウを更新
     UpdateWindow(hWnd);
+    return TRUE;
 }
 
 
@@ -271,7 +271,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 autoVolCore::ctrl::set_targetLevel_by_0_100(gParamMap.at("targetSliderVal"));
                 wsprintf(volmsg, _T("%3ddB"), (int)autoVolCore::ctrl::get_taget_lev_db());
                 //デバイス名表示
-                autoVolCore::ctrl::get_DeviceName(firiendryName);
+                autoVolCore::ctrl::get_DeviceName(firiendryName, _countof(firiendryName));
                 //タイマー開始
                 SetTimer(hWnd, AUTOVOL_TIMER, AUTOVOL_PERIOD_MS, NULL);
                 //UI更新
@@ -336,7 +336,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             autoVolCore::ctrl::set_targetLevel_by_0_100(gParamMap.at("targetSliderVal"));
             wsprintf(volmsg, _T("%3ddB"), (int)autoVolCore::ctrl::get_taget_lev_db());
             //フレンドリーネーム取得
-            autoVolCore::ctrl::get_DeviceName(firiendryName);
+            autoVolCore::ctrl::get_DeviceName(firiendryName, _countof(firiendryName));
             InvalidateRect(hWnd, NULL, TRUE); //UI Update 全体
         }
         break;

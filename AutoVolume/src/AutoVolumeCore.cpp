@@ -302,7 +302,7 @@ namespace autoVolCore {
 
         //表示用デバイス名取得
         //https://learn.microsoft.com/ja-jp/windows/win32/coreaudio/device-properties を引用
-        void get_DeviceName(static TCHAR* buff) {
+        void get_DeviceName(TCHAR* buff, size_t buffLen) {
             LPWSTR pDeviceId = NULL;
             hr = pDevice->GetId(&pDeviceId);
             error_chk(hr);
@@ -319,7 +319,7 @@ namespace autoVolCore {
 
             const wchar_t* targetRole[3] = { L"eConsole" ,  L"eMultimedia" ,  L"eCommunications"};
 
-            wsprintf(buff,_T("対象デバイス (%s):\n %ls \n"), targetRole[TARGET_ROLE], friendlyName.pwszVal);
+            _sntprintf_s(buff,buffLen, _TRUNCATE, _T("対象デバイス (%s):\n %ls \n"), targetRole[TARGET_ROLE], friendlyName.pwszVal);
 
             PropVariantClear(&friendlyName);
             release_resource(&pIPropertyStore);

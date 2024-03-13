@@ -42,7 +42,7 @@ namespace autoVolCore {
         void         set_targetLevel(float);        //目標値を設定 set_targetLevel_by_0_100から呼ばれる
         void         set_targetLevel_by_0_100(int); //目標値を設定 UIから呼ばれる
         float        get_taget_lev_db(void);        //dB表示の目標値を取得 UIから呼ばれる
-        void         get_DeviceName(static TCHAR*); //表示用の名前取得
+        void         get_DeviceName(TCHAR*,size_t); //表示用の名前取得
         unsigned int get_ReleaseRate(void);         //リリース速度 dB/s の取得
         void         set_ReleaseRate(unsigned int); //リリース速度 dB/s の設定
         bool         isRestarted(void);             //リスタートされたか
