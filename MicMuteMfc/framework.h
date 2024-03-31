@@ -28,10 +28,18 @@
 
 #include <afxcontrolbars.h>     // MFC におけるリボンとコントロール バーのサポート
 
+#include <mmdeviceapi.h>
 
-
-
-
+#include <map>
+#include <iostream>
+#include <tchar.h>
+#include <windows.h>
+#include <winuser.h>
+#include <combaseapi.h>
+#include <audiopolicy.h>
+#include <shobjidl_core.h>
+#include <endpointvolume.h>
+#include <Functiondiscoverykeys_devpkey.h>
 
 
 

@@ -37,6 +37,7 @@ CMicMuteMfcApp theApp;
 
 BOOL CMicMuteMfcApp::InitInstance()
 {
+	CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 	// アプリケーション マニフェストが visual スタイルを有効にするために、
 	// ComCtl32.dll Version 6 以降の使用を指定する場合は、
 	// Windows XP に InitCommonControlsEx() が必要です。さもなければ、ウィンドウ作成はすべて失敗します。
@@ -59,24 +60,26 @@ BOOL CMicMuteMfcApp::InitInstance()
 	// TODO: 会社名または組織名などの適切な文字列に
 	// この文字列を変更してください。
 	SetRegistryKey(_T("アプリケーション ウィザードで生成されたローカル アプリケーション"));
-
-	CMicMuteMfcDlg dlg;
-	m_pMainWnd = &dlg;
-	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
-	{
-		// TODO: ダイアログが <OK> で消された時のコードを
-		//  記述してください。
-	}
-	else if (nResponse == IDCANCEL)
-	{
-		// TODO: ダイアログが <キャンセル> で消された時のコードを
-		//  記述してください。
-	}
-	else if (nResponse == -1)
-	{
-		TRACE(traceAppMsg, 0, "警告: ダイアログの作成に失敗しました。アプリケーションは予期せずに終了します。\n");
-	}
+  {
+    CMicMuteMfcDlg dlg;
+    m_pMainWnd = &dlg;
+    INT_PTR nResponse = dlg.DoModal();
+    if (nResponse == IDOK)
+    {
+      // TODO: ダイアログが <OK> で消された時のコードを
+      //  記述してください。
+    }
+    else if (nResponse == IDCANCEL)
+    {
+      // TODO: ダイアログが <キャンセル> で消された時のコードを
+      //  記述してください。
+    }
+    else if (nResponse == -1)
+    {
+      TRACE(traceAppMsg, 0, "警告: ダイアログの作成に失敗しました。アプリケーションは予期せずに終了します。\n");
+    }
+		m_pMainWnd = nullptr;
+  }
 
 
 #if !defined(_AFXDLL) && !defined(_AFX_NO_MFC_CONTROLS_IN_DIALOGS)
@@ -85,6 +88,7 @@ BOOL CMicMuteMfcApp::InitInstance()
 
 	// ダイアログは閉じられました。アプリケーションのメッセージ ポンプを開始しないで
 	//  アプリケーションを終了するために FALSE を返してください。
+	CoUninitialize();
 	return FALSE;
 }
 

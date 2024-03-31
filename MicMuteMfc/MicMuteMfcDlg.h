@@ -19,7 +19,11 @@ public:
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
+	
+	CComPtr<IMMDeviceEnumerator> pEnumerator;
 
+	CComPtr<IAudioEndpointVolume> m_pEndPointMic;
+	CComPtr<IAudioEndpointVolume> m_pEndPointAudio;
 
 // 実装
 protected:
@@ -31,4 +35,11 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	// Audio Mute state.
+	BOOL m_bAudioMute;
+	// Mic Mute state.
+	BOOL m_bMicMute;
+	afx_msg void OnAudioMuteCheckClicked();
+	afx_msg void OnBnClickedMicMuteCheck();
 };
